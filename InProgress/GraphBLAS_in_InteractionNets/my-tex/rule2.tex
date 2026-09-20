@@ -1,0 +1,54 @@
+\documentclass[border=5pt]{standalone}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\usepackage{tikz-inet}
+\usepackage{xcolor}
+
+\colorlet{darkred}{red!60!black}
+\colorlet{darkblue}{blue!60!black}
+\colorlet{darkgreen}{green!60!black}
+
+\usetikzlibrary{positioning, arrows.meta, patterns, calc}
+\begin{document}
+\begin{tikzpicture}[>=Stealth, node distance=0.5cm]
+    \begin{scope}[local bounding box=group1]
+        \matrix[row sep=1em]{
+            \inetcell(S){$S$}[D] \\
+            \inetcell(Add){$\text{Add}$}[U] \\};
+            \node (p) [right=of S.pal] {$\phantom x$};
+            % \inetwirefree(S.middle pax)
+            % \inetwirefree(Add.left pax)
+            % \inetwirefree(Add.right pax)
+            \inetwire(S.pal)(Add.pal)
+            \node (la) [below = of Add.left pax, draw, circle, pattern color=darkred, pattern=crosshatch] {};
+            \node (ra) [below = of Add.right pax, draw, circle, pattern color=darkblue, pattern=north east lines] {};
+            \node (sm) [above = of S.middle pax, draw, circle, pattern color=darkgreen, pattern=horizontal lines] {};
+
+            \draw[thick] (Add.right pax) -- (ra);
+            \draw[thick] (Add.left pax) -- (la);
+            \draw[thick] (S.middle pax) -- (sm);
+    \end{scope}
+
+    \draw[->, thick] (group1.east) ++(0.5,0) -- ++(0.9,0);
+
+    \begin{scope}[shift={(group1.east)}, xshift=2.5cm]
+        \inetcell(Add){$\text{Add}$}[U]
+        \inetcell[node distance=1em, below=of Add.right pax](S){$S$}[D]
+        % \node (p) [right=of Add.middle pax] {$\phantom x$};
+        % \inetwirefree(Add.pal)
+        % \inetwirefree(Add.left pax)
+        % \inetwirefree(S.pal)
+        \inetwire(Add.right pax)(S.middle pax)
+
+        \node (ap) [above = of Add.pal, draw, circle, pattern color=darkgreen, pattern=horizontal lines] {};
+        \node (la) [below = of Add.left pax, draw, circle, pattern color=darkred, pattern=crosshatch] {};
+        \node (sp) [below = of S.pal, draw, circle, pattern color=darkblue, pattern=north east lines] {};
+
+        \draw[thick] (Add.pal) -- (ap);
+        \draw[thick] (Add.left pax) -- (la);
+        \draw[thick] (S.pal) -- (sp);
+    \end{scope}
+\end{tikzpicture}
+\end{document}
